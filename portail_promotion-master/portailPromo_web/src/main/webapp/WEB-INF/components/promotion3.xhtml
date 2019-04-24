@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:component>
+	<figure class="FichePromotion w3-mobile w3-col s3 l3 w3-row">
+	<div class="w3-col s12"
+		onclick="document.getElementById('id_#{promotion.id}').style.display='block'">
+		<div class="product-image w3-center">
+			<h:graphicImage class="w3-image" alt="Promotions" title="Promotion"
+							value='../../Ressources/Images/product/#{promotion.getBaseProduct().image == null ? "img_promo_product_by_default.png" : promotion.getBaseProduct().image}'/>
+		</div>
+	</div>
+	<div class="w3-col s12 w3-row">
+		<div class="w3-col s12 w3-center w3-padding-16">
+			<h:outputText
+				class="w3-mobile w3-large" value="#{promotion.name}" />
+			<br />
+			<h:outputText id="lblTitreProduit_#{promotion.id}"
+				class="w3-mobile w3-large"
+				value="#{promotion.getBaseProduct().referenceProduct.name}"/>
+		</div>
+
+		<div class="w3-col s12 w3-center">
+			<h:outputText
+				class="w3-mobile w3-large" style="text-decoration:line-through;"
+				value="#{promotion.getInitPrice()}">
+				<f:convertNumber maxFractionDigits="2"></f:convertNumber>
+			</h:outputText>
+			<h:outputText class="w3-mobile w3-large"
+				value="€/#{promotion.getBaseProduct().referenceProduct.salesUnit.name}"
+				style="text-decoration:line-through;" />
+			<br />
+			<h:outputText class="w3-text-red w3-mobile w3-xlarge"
+				value="#{promotion.getPriceAfterPromotion()}">
+				<f:convertNumber maxFractionDigits="2"></f:convertNumber>
+			</h:outputText>
+			<h:outputText class="w3-text-red w3-mobile w3-xlarge"
+				value="€/#{promotion.getBaseProduct().referenceProduct.salesUnit.name}" />
+		</div>
+		<div class="w3-col s12 w3-center w3-padding-16">
+			<label>Date de fin de la promotion: </label>
+			<h:outputText
+				value="#{promotion.getEndDate()}">
+				<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+			</h:outputText>
+		</div>
+		<div class="w3-col s12 w3-center">
+			<label>Délai de retrait pour le produit: </label>
+			<h:outputText
+				value="#{promotion.limitTimeTakePromotion.toHours()} heure(s)" />
+		</div>
+	</div>
+	<div class="w3-row w3-col s12 w3-padding-16">
+		<h:form class="w3-col s12 w3-row">
+			<h:selectOneMenu value="#{bookBean.quantityBooked}"
+				class="w3-select w3-col s3 w3-padding-16">
+				<f:convertNumber></f:convertNumber>
+				<f:selectItem itemValue="1" itemLabel="1" />
+				<f:selectItem itemValue="2" itemLabel="2" />
+				<f:selectItem itemValue="3" itemLabel="3" />
+				<f:selectItem itemValue="4" itemLabel="4" />
+				<f:selectItem itemValue="5" itemLabel="5" />
+				<f:selectItem itemValue="6" itemLabel="6" />
+				<f:selectItem itemValue="7" itemLabel="7" />
+				<f:selectItem itemValue="8" itemLabel="8" />
+				<f:selectItem itemValue="9" itemLabel="9" />
+				<f:selectItem itemValue="10" itemLabel="10" />
+			</h:selectOneMenu>
+			<h:outputText class="w3-col s3 w3-padding-16"
+				value="#{promotion.getBaseProduct().referenceProduct.salesUnit.name}" />
+			<h:commandButton action="#{bookBean.book(promotion)}" disabled="#{empty connectionBean.loggedUser}"
+				value="Réserver"
+				class="w3-button w3-teal w3-hover-dark-grey w3-col s6 w3-padding-16" />
+		</h:form>
+	</div>
+	<h:outputText class="w3-col s12 w3-padding-16 w3-text-teal w3-center" id="connectionWarningMessage" rendered="#{empty connectionBean.loggedUser}"
+				  value="Veuillez vous connecter pour réserver un produit"/>
+
+	<div id="id_#{promotion.id}" class="w3-modal">
+		<div class="w3-modal-content w3-card-4 w3-animate-zoom w3-row">
+			<header class="w3-col s12"> <span
+				onclick="document.getElementById('id_#{promotion.id}').style.display='none'"
+				class="w3-button w3-red w3-xlarge w3-right">&#9747;</span> </header>
+			<div class="w3-col s12 w3-row">
+				<div class="product-image w3-col s6 w3-center">
+					<h:graphicImage class="w3-image" alt="Promotions" title="Promotion"
+									value='../../Ressources/Images/product/#{promotion.getBaseProduct().image == null ? "img_promo_product_by_default.png" : promotion.getBaseProduct().image}'/>
+				</div>
+				<div class="w3-col s6 w3-row">
+					<div class="w3-col s12 w3-center w3-padding-16">
+						<h:outputText
+							class="w3-mobile w3-large" value="#{promotion.name}" />
+						<br />
+						<h:outputText
+							class="w3-mobile w3-large"
+							value="#{promotion.getBaseProduct().referenceProduct.name}"/>
+					</div>
+
+					<div class="w3-col s12 w3-center">
+						<h:outputText
+							class="w3-mobile w3-large" style="text-decoration:line-through;"
+							value="#{promotion.getInitPrice()}">
+							<f:convertNumber maxFractionDigits="2"></f:convertNumber>
+						</h:outputText>
+						<h:outputText class="w3-mobile w3-large"
+							value="€/#{promotion.getBaseProduct().referenceProduct.salesUnit.name}"
+							style="text-decoration:line-through;" />
+						<br />
+						<h:outputText class="w3-text-red w3-mobile w3-xlarge"
+							value="#{promotion.getPriceAfterPromotion()}">
+							<f:convertNumber maxFractionDigits="2"></f:convertNumber>
+						</h:outputText>
+						<h:outputText class="w3-text-red w3-mobile w3-xlarge"
+							value="€/#{promotion.getBaseProduct().referenceProduct.salesUnit.name}" />
+					</div>
+					<div class="w3-col s12 w3-center w3-padding-16">
+						<label>Date de fin de la promotion: </label>
+						<h:outputText
+							value="#{promotion.getEndDate()}">
+							<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+						</h:outputText>
+					</div>
+					<div class="w3-col s12 w3-center">
+						<label>Délai de retrait pour le produit: </label>
+						<h:outputText
+							value="#{promotion.limitTimeTakePromotion.toHours()} heure(s)" />
+					</div>
+					<div class="w3-row w3-col s12 w3-padding-16">
+						<h:form class="w3-col s12 w3-row">
+							<h:selectOneMenu value="#{bookBean.quantityBooked}"
+								class="w3-select w3-col s3 w3-padding-16">
+								<f:convertNumber></f:convertNumber>
+								<f:selectItem itemValue="1" itemLabel="1" />
+								<f:selectItem itemValue="2" itemLabel="2" />
+								<f:selectItem itemValue="3" itemLabel="3" />
+								<f:selectItem itemValue="4" itemLabel="4" />
+								<f:selectItem itemValue="5" itemLabel="5" />
+								<f:selectItem itemValue="6" itemLabel="6" />
+								<f:selectItem itemValue="7" itemLabel="7" />
+								<f:selectItem itemValue="8" itemLabel="8" />
+								<f:selectItem itemValue="9" itemLabel="9" />
+								<f:selectItem itemValue="10" itemLabel="10" />
+							</h:selectOneMenu>
+							<h:outputText class="w3-col s3 w3-padding-16"
+								value="#{promotion.getBaseProduct().referenceProduct.salesUnit.name}" />
+							<h:commandButton action="#{bookBean.book(promotion)}" disabled="#{empty connectionBean.loggedUser}"
+								value="Réserver"
+								class="w3-button w3-teal w3-hover-dark-grey w3-col s6 w3-padding-16" />
+						</h:form>
+					</div>
+					<div class="w3-row w3-col s12 w3-padding-16">
+						<div class="w3-col s12 w3-center w3-padding-16">
+							<label>Commerce: </label>
+							<h:outputText class=""
+								value="#{promotion.getShopList().get(0).name}" />
+							<br /> <br /> <label>Adresse: </label>
+							<h:outputText
+								value="#{promotion.getShopList().get(0).address.number} " />
+							<h:outputText
+								value="#{promotion.getShopList().get(0).address.addressType.name} " />
+							<h:outputText
+								value="#{promotion.getShopList().get(0).address.name} " />
+							<h:outputText
+								value="#{promotion.getShopList().get(0).address.city.postalCode} " />
+							<h:outputText
+								value="#{promotion.getShopList().get(0).address.city.name} " />
+						</div>
+						<h:form class="w3-col s12 w3-center">
+							<h:commandButton action="#{followBean.follow(promotion.getShopList().get(0))}" disabled="#{empty connectionBean.loggedUser}"
+								value="Suivre commerce"
+								class="w3-button w3-teal w3-hover-dark-grey w3-padding-16 w3-mobile" />
+						</h:form>
+					</div>
+					<h:outputText class="w3-col s12 w3-padding-16 w3-text-teal w3-center" id="modalConnectionWarningMessage" rendered="#{empty connectionBean.loggedUser}"
+								  value="Veuillez vous connecter pour réserver un produit ou suivre un commerce"/>
+				</div>
+			</div>
+			<div class="w3-bar w3-border-bottom w3-col s12">
+				<button class="tablink w3-bar-item w3-button"
+					onclick="openCity(event, 'Description_Detaille_#{promotion.id}')">Description</button>
+				<button class="tablink w3-bar-item w3-button"
+					onclick="openCity(event, 'Avis_#{promotion.id}')">Avis</button>
+			</div>
+
+			<div id="Description_Detaille_#{promotion.id}"
+				class="w3-container city">
+				<p class="para top w3-mobile">
+					<h:outputLabel value="#{promotion.description}" />
+				</p>
+			</div>
+
+			<div id="Avis_#{promotion.id}" class="w3-container city">
+				<blockquote class="w3-mobile">
+					<header class="avisClient w3-mobile"> <span
+						data-rating='5'> <i class="ion-star"></i> <i
+						class="ion-star"></i> <i class="ion-star"></i> <i class="ion-star"></i>
+						<i class="ion-star"></i>
+					</span> <strong class="w3-mobile">Titre Avis</strong> <span
+						class="w3-mobile"> 20 Octobre 2018</span> <span class="w3-mobile">
+						Par <em>Ramya</em>
+					</span>
+					<p>Description Avis</p>
+					</header>
+				</blockquote>
+
+				<blockquote class="w3-mobile">
+					<header class="avisClient w3-mobile"> <span
+						data-rating='4'> <i class="ion-star"></i> <i
+						class="ion-star"></i> <i class="ion-star"></i> <i class="ion-star"></i>
+						<i class="ion-star"></i>
+					</span> <strong class="w3-mobile">Titre Avis</strong> <span
+						class="w3-mobile"> 20 Octobre 2018</span> <span class="w3-mobile">Par
+						<em>Aubin</em>
+					</span>
+					<p class="w3-mobile">Description Avis</p>
+					q </header>
+				</blockquote>
+
+				<blockquote class="w3-mobile w3-s">
+					<header class=" w3-mobile avisClient"> <span
+						data-rating='0'> <i class="ion-star"></i> <i
+						class="ion-star"></i> <i class="ion-star"></i> <i class="ion-star"></i>
+						<i class="ion-star"></i>
+					</span> <strong class="w3-mobile">Titre Avis</strong> <span
+						class="w3-mobile"> 18 Octobre 2018</span> <span class="w3-mobile">Par
+						<em>Nicolas</em>
+					</span>
+					<p class="w3-mobile">Description Avis</p>
+					</header>
+				</blockquote>
+			</div>
+		</div>
+	</div>
+
+	</figure>
+
+
+</ui:component>
+
+</html>
