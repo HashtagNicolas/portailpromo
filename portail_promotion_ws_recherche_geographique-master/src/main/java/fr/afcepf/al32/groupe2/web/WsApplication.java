@@ -23,6 +23,8 @@ public class WsApplication extends SpringBootServletInitializer {
         SpringApplication.run(WsApplication.class, args);
         //afficher l'URL pour effectuer un test via un navigateur.
         System.out.println("http://localhost:8082/wsRechercheGeo");
+        System.out.println("http://localhost:8082/wsRechercheGeo/rest/rechercheGeo/localisation/?source=Paris");
+        System.out.println("http://localhost:8082/wsRechercheGeo/rest/rechercheGeo/commerce/?source=Paris&perimetre=11");
     }
 
 }

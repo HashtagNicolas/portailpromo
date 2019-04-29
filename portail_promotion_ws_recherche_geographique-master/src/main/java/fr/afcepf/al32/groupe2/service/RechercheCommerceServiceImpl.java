@@ -42,7 +42,7 @@ public class RechercheCommerceServiceImpl implements IRechercheCommerceService {
 	@Autowired
 	private IRechercheCommerceDao commerceDao;
 
-	private static final String API_KEY = "AIzaSyCOgjLuPdzJDCJW78z26UuL8k3vhF5OsHs";
+	private static final String API_KEY = "AIzaSyCeN-BYx5w0S5NqmG3mLslb3Xzfldh6r0w";
 	private static final String PIPE = "%7C";
 	private static final String SPACE = "%20";
 	OkHttpClient client = new OkHttpClient();

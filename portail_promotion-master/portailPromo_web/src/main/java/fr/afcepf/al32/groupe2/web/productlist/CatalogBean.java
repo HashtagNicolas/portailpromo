@@ -93,10 +93,18 @@ public class CatalogBean {
 		if (categoryProduct != null) {
 			category = categoryProduct.getName();
 		}
+		//Correctif : gestion du nullPointerException sur TopPromotionTemplateResultDto
+		TopPromotionTemplateResultDto resultDto = null;
+		try {
+			
+			resultDto = promoClientService.searchByClientsFavoriteCategory(
+					Double.parseDouble(client.getAddress().getCoordinates().getLongitude()),
+					Double.parseDouble(client.getAddress().getCoordinates().getLatitude()), category);
+			
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
 
-		TopPromotionTemplateResultDto resultDto = promoClientService.searchByClientsFavoriteCategory(
-				Double.parseDouble(client.getAddress().getCoordinates().getLongitude()),
-				Double.parseDouble(client.getAddress().getCoordinates().getLatitude()), category);
 
 		return resultDto.getTemplates();
 	}
@@ -135,13 +143,33 @@ public class CatalogBean {
 	public void initCatalogProduits() {
 
 		promotions = getAllPromotions();
+		
+		//TODO pour chaque promotions > getcatégorie de la promotion > put la categorie de la promotion dans une liste de catégorie
+//		for (Promotion promotion : promotions) {
+//
+//			List<String> categoryActive = new ArrayList<String>(); 
+//			categoryActive.add(promotion.getBaseProduct().getReferenceProduct().getCategoriesProduct().getName());
+//			System.out.println(categoryActive);		
+//
+//		}
 
+		// à l'initialisation récupère dans une liste l'ensemble des catégories en base
 		categories = getAllRootCategories().stream().sorted(Comparator.comparing(CategoryProduct::getName))
 				.collect(Collectors.toList());
 		
+		//TODO gestion d'un utilisateur desincrit erreur  test => user :  root3  mdp :root
 		User user =  connectionBean.getLoggedUser();
+
 		if (user != null && user.getClass().equals(Client.class)) {
-			topPromotionsClient= trouverLesPromoPreferees((Client) user);
+			try {
+				
+				topPromotionsClient= trouverLesPromoPreferees((Client) user);
+				
+			} catch (NullPointerException e) {
+				
+				e.printStackTrace();
+			}
+
 		}
 
 	}

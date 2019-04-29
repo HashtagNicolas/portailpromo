@@ -116,4 +116,10 @@ public class PromotionFactory implements IPromotionFactory {
 		return this;
 	}
 
+	@Override
+	public IPromotionFactory getTypePromotion(String promotionType) {
+		this.promotionType = promotionType;
+		return this;
+	}
+
 }

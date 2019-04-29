@@ -10,4 +10,6 @@ public interface IPromotionFactory {
 	IPromotionFactory setLimitTimeTakePromotion(Duration limitTimeTakePromotion);
 	IPromotionFactory setQuantityInitAvailable(Double quantityInitAvailable);
 	IPromotionFactory setIsCumulative(Boolean isCumulative);
+	//TODO getTypePromotion New Ajout N_gon (AL33) factory à implémenter et tester
+	IPromotionFactory getTypePromotion(String promotionType);
 }

@@ -1,32 +1,37 @@
 package fr.afcepf.al32.groupe2.web.connexion;
 
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+import fr.afcepf.al32.groupe2.entity.Registration;
 import fr.afcepf.al32.groupe2.entity.User;
 import fr.afcepf.al32.groupe2.service.IAuthenticationService;
 
 @Component
 @SessionScope
 public class ConnectionBean {
-	
+
 	@Autowired
 	private IAuthenticationService authenticationService;
-	
+
 	private User loggedUser;
-	
+
 	private String login;
-	
+
 	private String password;
-	
+
 	private String message;
-	
+
 	public String connect() {
 		String suite="/invite/connexion/simpleConnexion";
 		
 		User newUser = authenticationService.findOneByLoginAndPassword(login, password);
-		
+         
 		if(newUser != null) {
 			loggedUser = newUser;
 			suite = "/invite/fichesPromotion/pageAffichagePromotions";
@@ -37,10 +42,10 @@ public class ConnectionBean {
 
 		return suite;
 	}
-	
+
 	public String logout() {
 		loggedUser = null;
-		
+
 		return "/invite/fichesPromotion/pageAffichagePromotions";
 	}
 
@@ -67,6 +72,5 @@ public class ConnectionBean {
 	public String getMessage() {
 		return message;
 	}
-	
-	
+
 }
