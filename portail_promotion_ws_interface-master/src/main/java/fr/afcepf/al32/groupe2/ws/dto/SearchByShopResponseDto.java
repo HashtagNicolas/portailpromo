@@ -2,13 +2,7 @@ package fr.afcepf.al32.groupe2.ws.dto;
 
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class SearchByShopResponseDto {
 
 	private List<PromotionDto> promotionsDto;
@@ -29,6 +23,16 @@ public class SearchByShopResponseDto {
 
 	public void setShopDtos(List<ShopDto> shopDtos) {
 		this.shopDtos = shopDtos;
+	}
+
+	public SearchByShopResponseDto(List<PromotionDto> promotionsDto, List<ShopDto> shopDtos) {
+		super();
+		this.promotionsDto = promotionsDto;
+		this.shopDtos = shopDtos;
+	}
+
+	public SearchByShopResponseDto() {
+		super();
 	}
 	
 	

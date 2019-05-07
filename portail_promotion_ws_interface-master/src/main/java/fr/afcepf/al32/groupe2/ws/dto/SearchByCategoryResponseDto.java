@@ -6,9 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class SearchByCategoryResponseDto {
 
 	private List<PromotionDto> promotionsDto;
@@ -29,6 +27,16 @@ public class SearchByCategoryResponseDto {
 
 	public void setCategoryProductDto(CategoryProductDto categoryProductDto) {
 		this.categoryProductDto = categoryProductDto;
+	}
+
+	public SearchByCategoryResponseDto(List<PromotionDto> promotionsDto, CategoryProductDto categoryProductDto) {
+		super();
+		this.promotionsDto = promotionsDto;
+		this.categoryProductDto = categoryProductDto;
+	}
+
+	public SearchByCategoryResponseDto() {
+		super();
 	}
 	
 	
