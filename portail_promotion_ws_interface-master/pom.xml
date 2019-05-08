@@ -62,11 +62,6 @@
 			<version>1.0.2.Final</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.18.2</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
