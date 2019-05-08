@@ -34,8 +34,31 @@ public class PromotionTemplateResultDto {
     private Double dist;
 
     private int reservationsNumber;
+    
 
-    public Long getPromotionId() {
+    
+    public PromotionTemplateResultDto() {
+		super();
+	}
+
+	public PromotionTemplateResultDto(Long promotionId, Date timestamp, String name, String description,
+			Duration limitTimePromotion, Duration limitTimeTakePromotion, Double reservedProductPercentage,
+			PromotionType promotionType, Product product, Double dist, int reservationsNumber) {
+		super();
+		this.promotionId = promotionId;
+		this.timestamp = timestamp;
+		this.name = name;
+		this.description = description;
+		this.limitTimePromotion = limitTimePromotion;
+		this.limitTimeTakePromotion = limitTimeTakePromotion;
+		this.reservedProductPercentage = reservedProductPercentage;
+		this.promotionType = promotionType;
+		this.product = product;
+		this.dist = dist;
+		this.reservationsNumber = reservationsNumber;
+	}
+
+	public Long getPromotionId() {
         return promotionId;
     }
 
