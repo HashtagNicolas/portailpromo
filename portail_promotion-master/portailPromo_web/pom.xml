@@ -72,6 +72,16 @@
 			<artifactId>google-collections</artifactId>
 			<version>1.0</version>
 		</dependency>
+		
+		<!-- AQ-DEB -->
+		<dependency>
+        	<groupId>mysql</groupId>
+        	<artifactId>mysql-connector-java</artifactId>
+        	<scope>runtime</scope>
+    	</dependency>
+    	<!-- AQ-FIN -->
+		
+		
 	</dependencies>
 
 	<build>
