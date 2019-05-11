@@ -302,6 +302,25 @@
 		}
 		//]]>
 	</script>
+	<script type="text/javascript">
+		window.addEventListener(
+						"load",
+						function() {
+							if ("geolocation" in navigator) { /* géolocalisation possible */
+								navigator.geolocation
+										.getCurrentPosition(function(position) {
+											//Format JSON de la latitude et de la longitude pour géolocalisé un invité
+											geolocationUser = {
+												latitude : position.coords.latitude,
+												longitude : position.coords.longitude
+											};
+											console.log(geolocationUser);
+										});
+							} else {
+								alert("Le service de géolocalisation n'est pas disponible sur votre ordinateur.");
+							}
+						}, false);
+	</script>
 </body>
 
 </html>
