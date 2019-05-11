@@ -12,6 +12,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 public class App extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(App.class, args);
-		System.out.println("http://localhost:8083/portail_promotion_ws_recherche");
+		System.out.println("http://localhost:8088/portail_promotion_ws_authentification");
 	}
 }
