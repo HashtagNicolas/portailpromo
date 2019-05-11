@@ -10,22 +10,21 @@
 		onclick="document.getElementById('id_#{promotion.id}').style.display='block'">
 		<div class="product-image w3-center">
 			<h:graphicImage class="w3-image" alt="Promotions" title="Promotion"
-							value='../../Ressources/Images/product/#{promotion.getBaseProduct().image == null ? "img_promo_product_by_default.png" : promotion.getBaseProduct().image}'/>
+				value='../../Ressources/Images/product/#{promotion.getBaseProduct().image == null ? "img_promo_product_by_default.png" : promotion.getBaseProduct().image}' />
 		</div>
 	</div>
 	<div class="w3-col s12 w3-row">
 		<div class="w3-col s12 w3-center w3-padding-16">
-			<h:outputText
-				class="w3-mobile w3-large" value="#{promotion.name}" />
+			<h:outputText class="w3-mobile w3-large" value="#{promotion.name}" />
 			<br />
 			<h:outputText id="lblTitreProduit_#{promotion.id}"
 				class="w3-mobile w3-large"
-				value="#{promotion.getBaseProduct().referenceProduct.name}"/>
+				value="#{promotion.getBaseProduct().referenceProduct.name}" />
 		</div>
 
 		<div class="w3-col s12 w3-center">
-			<h:outputText
-				class="w3-mobile w3-large" style="text-decoration:line-through;"
+			<h:outputText class="w3-mobile w3-large"
+				style="text-decoration:line-through;"
 				value="#{promotion.getInitPrice()}">
 				<f:convertNumber maxFractionDigits="2"></f:convertNumber>
 			</h:outputText>
@@ -42,8 +41,7 @@
 		</div>
 		<div class="w3-col s12 w3-center w3-padding-16">
 			<label>Date de fin de la promotion: </label>
-			<h:outputText
-				value="#{promotion.getEndDate()}">
+			<h:outputText value="#{promotion.getEndDate()}">
 				<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 			</h:outputText>
 		</div>
@@ -71,13 +69,18 @@
 			</h:selectOneMenu>
 			<h:outputText class="w3-col s3 w3-padding-16"
 				value="#{promotion.getBaseProduct().referenceProduct.salesUnit.name}" />
-			<h:commandButton action="#{bookBean.book(promotion)}" disabled="#{empty connectionBean.loggedUser}"
-				value="Réserver"
-				class="w3-button w3-teal w3-hover-dark-grey w3-col s6 w3-padding-16" />
+
+			<h:commandButton action="#{bookBean.book}"
+				disabled="#{empty connectionBean.loggedUser}" value="Réserver"
+				class="w3-button w3-teal w3-hover-dark-grey w3-col s6 w3-padding-16">
+				<f:param name="promotion" value="#{promotion.id}" />
+			</h:commandButton>
 		</h:form>
 	</div>
-	<h:outputText class="w3-col s12 w3-padding-16 w3-text-teal w3-center" id="connectionWarningMessage" rendered="#{empty connectionBean.loggedUser}"
-				  value="Veuillez vous connecter pour réserver un produit"/>
+	<h:outputText class="w3-col s12 w3-padding-16 w3-text-teal w3-center"
+		id="connectionWarningMessage"
+		rendered="#{empty connectionBean.loggedUser}"
+		value="Veuillez vous connecter pour réserver un produit" />
 
 	<div id="id_#{promotion.id}" class="w3-modal">
 		<div class="w3-modal-content w3-card-4 w3-animate-zoom w3-row">
@@ -87,21 +90,19 @@
 			<div class="w3-col s12 w3-row">
 				<div class="product-image w3-col s6 w3-center">
 					<h:graphicImage class="w3-image" alt="Promotions" title="Promotion"
-									value='../../Ressources/Images/product/#{promotion.getBaseProduct().image == null ? "img_promo_product_by_default.png" : promotion.getBaseProduct().image}'/>
+						value='../../Ressources/Images/product/#{promotion.getBaseProduct().image == null ? "img_promo_product_by_default.png" : promotion.getBaseProduct().image}' />
 				</div>
 				<div class="w3-col s6 w3-row">
 					<div class="w3-col s12 w3-center w3-padding-16">
-						<h:outputText
-							class="w3-mobile w3-large" value="#{promotion.name}" />
+						<h:outputText class="w3-mobile w3-large" value="#{promotion.name}" />
 						<br />
-						<h:outputText
-							class="w3-mobile w3-large"
-							value="#{promotion.getBaseProduct().referenceProduct.name}"/>
+						<h:outputText class="w3-mobile w3-large"
+							value="#{promotion.getBaseProduct().referenceProduct.name}" />
 					</div>
 
 					<div class="w3-col s12 w3-center">
-						<h:outputText
-							class="w3-mobile w3-large" style="text-decoration:line-through;"
+						<h:outputText class="w3-mobile w3-large"
+							style="text-decoration:line-through;"
 							value="#{promotion.getInitPrice()}">
 							<f:convertNumber maxFractionDigits="2"></f:convertNumber>
 						</h:outputText>
@@ -118,8 +119,7 @@
 					</div>
 					<div class="w3-col s12 w3-center w3-padding-16">
 						<label>Date de fin de la promotion: </label>
-						<h:outputText
-							value="#{promotion.getEndDate()}">
+						<h:outputText value="#{promotion.getEndDate()}">
 							<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 						</h:outputText>
 					</div>
@@ -146,9 +146,11 @@
 							</h:selectOneMenu>
 							<h:outputText class="w3-col s3 w3-padding-16"
 								value="#{promotion.getBaseProduct().referenceProduct.salesUnit.name}" />
-							<h:commandButton action="#{bookBean.book(promotion)}" disabled="#{empty connectionBean.loggedUser}"
-								value="Réserver"
-								class="w3-button w3-teal w3-hover-dark-grey w3-col s6 w3-padding-16" />
+							<h:commandButton action="#{bookBean.book}"
+								disabled="#{empty connectionBean.loggedUser}" value="Réserver"
+								class="w3-button w3-teal w3-hover-dark-grey w3-col s6 w3-padding-16">
+								<f:param name="promotion" value="#{promotion.id}" />
+							</h:commandButton>
 						</h:form>
 					</div>
 					<div class="w3-row w3-col s12 w3-padding-16">
@@ -169,13 +171,18 @@
 								value="#{promotion.getShopList().get(0).address.city.name} " />
 						</div>
 						<h:form class="w3-col s12 w3-center">
-							<h:commandButton action="#{followBean.follow(promotion.getShopList().get(0))}" disabled="#{empty connectionBean.loggedUser}"
+							<h:commandButton
+								action="#{followBean.follow(promotion.getShopList().get(0))}"
+								disabled="#{empty connectionBean.loggedUser}"
 								value="Suivre commerce"
 								class="w3-button w3-teal w3-hover-dark-grey w3-padding-16 w3-mobile" />
 						</h:form>
 					</div>
-					<h:outputText class="w3-col s12 w3-padding-16 w3-text-teal w3-center" id="modalConnectionWarningMessage" rendered="#{empty connectionBean.loggedUser}"
-								  value="Veuillez vous connecter pour réserver un produit ou suivre un commerce"/>
+					<h:outputText
+						class="w3-col s12 w3-padding-16 w3-text-teal w3-center"
+						id="modalConnectionWarningMessage"
+						rendered="#{empty connectionBean.loggedUser}"
+						value="Veuillez vous connecter pour réserver un produit ou suivre un commerce" />
 				</div>
 			</div>
 			<div class="w3-bar w3-border-bottom w3-col s12">

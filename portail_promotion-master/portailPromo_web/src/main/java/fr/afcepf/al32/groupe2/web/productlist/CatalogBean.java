@@ -70,12 +70,12 @@ public class CatalogBean {
 	/**
 	 * Attribut pour la recherche par lieu. Adresse servant de point central.
 	 */
-	private String searchSourceAddress = "Paris";
+	private String searchSourceAddress = "";
 
 	/**
 	 * Attribut pour la recherche par lieu. Périmètre de recherche en km.
 	 */
-	private Integer searchPerimeter = 1;
+	private Integer searchPerimeter = 11;
 
 	/**
 	 * Message d'avertissement si l'adresse n'existe pas.
