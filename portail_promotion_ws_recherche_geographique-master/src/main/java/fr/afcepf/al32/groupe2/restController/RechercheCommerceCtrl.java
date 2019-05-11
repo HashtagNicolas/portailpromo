@@ -12,6 +12,7 @@ import fr.afcepf.al32.groupe2.service.IRechercheCommerceService;
 import fr.afcepf.al32.groupe2.ws.dto.ResponseGeoApiDto;
 import fr.afcepf.al32.groupe2.ws.dto.ResponseWsDto;
 
+
 @RestController // composant spring de type controller de WS REST
 @RequestMapping(value = "/rest/rechercheGeo", headers = "Accept=application/json")
 public class RechercheCommerceCtrl {
@@ -43,4 +44,5 @@ public class RechercheCommerceCtrl {
 		return responseWsDto;
 
 	}
+
 }

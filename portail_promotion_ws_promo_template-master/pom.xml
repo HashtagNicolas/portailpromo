@@ -106,16 +106,6 @@
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>de.flapdoodle.embed</groupId> -->
-<!-- 			<artifactId>de.flapdoodle.embed.mongo</artifactId> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>cz.jirutka.spring</groupId> -->
-<!-- 			<artifactId>embedmongo-spring</artifactId> -->
-<!-- 			<version>RELEASE</version> -->
-<!-- 		</dependency> -->
-
 	</dependencies>
 	<build>
 		<plugins>
