@@ -105,14 +105,15 @@
     <div id="map" style="height: 400px; width: 100%;" data-id_item="id_#{promotion.id}"></div>
   <script type="text/javascript">
 // Initialize and add the map
-function initMap(id_item) { console.log('iddd : '+id_item);
+function initMap(id_item) { console.log('iddd : '+id_item); console.log(geolocationUser.latitude+' / '+geolocationUser.longitude);
 // 		var element_script = document.createElement('script'); element_script.setAttribute('src','https://maps.googleapis.com/maps/api/js?key=AIzaSyDjK4s5E_XSHlbogF3XVu2kNpGxFCIBDdc&amp;sensor=false&amp;libraries=geometry');
 // 		var notre_variable = document.getElementById('global').appendChild(element_script);
 // 		notre_variable.addEventListener("load", function() { }, false);
 	  
 		
-		 var xA =  48.8566101;//document.getElementById("essaigmap:longitude").value;
-		 var yA = 2.3514992;//document.getElementById("essaigmap:latitude").value;
+		 var xA = geolocationUser.latitude;
+		 var yA = geolocationUser.longitude;
+		 
 			
 		  var pointA = new google.maps.LatLng(xA, yA),
 		    pointB = new google.maps.LatLng(48.8144, 2.31606),
