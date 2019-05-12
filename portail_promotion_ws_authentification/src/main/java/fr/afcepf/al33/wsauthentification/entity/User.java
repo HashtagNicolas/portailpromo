@@ -26,35 +26,34 @@ import javax.validation.constraints.NotNull;
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="user_type")
 @NamedQueries(value= {
-		@NamedQuery(name="User.findByLoginAndPassword", 
+		@NamedQuery(name="User.findByLoginAndPassword",
 				query="SELECT us FROM User us INNER JOIN FETCH us.authenticationData ad WHERE ad.login = :login AND ad.password = :password")
-		
+
 })
-public abstract class User {
-	
+public class User {
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name="last_name")
 	@NotBlank
 	private String lastName;
-	
+
 	@Column(name="first_name")
 	@NotBlank
 	private String firstName;
-	
+
 	@NotBlank
 	private String email;
-	
+
 	@Column(name="phone_number")
 	@NotNull
 	private String phoneNumber;
-	
+
 	@OneToOne(mappedBy="user",cascade= {CascadeType.ALL}, optional=false)
-	
 	private AuthenticationData authenticationData;
-	
+
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="user_id")
 	@MapKey(name="id")
@@ -111,5 +110,5 @@ public abstract class User {
 	public void setRegistrations(Map<Long, UserRegistration> registrations) {
 		this.registrations = registrations;
 	}
-	
+
 }
