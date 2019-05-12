@@ -7,7 +7,7 @@
 <ui:component>
 	<figure class="FichePromotion w3-mobile w3-col s3 l3 w3-row">
 	<div class="w3-col s12"
-		onclick="(function() { document.getElementById('id_#{promotion.id}').style.display='block'; initMap(); })()" >
+		onclick="(function() { document.getElementById('id_#{promotion.id}').style.display='block'; initMap('id_#{promotion.id}'); })()" >
 		<div class="product-image w3-center">
 			<h:graphicImage class="w3-image" alt="Promotions" title="Promotion"
 				value='../../Ressources/Images/product/#{promotion.getBaseProduct().image == null ? "img_promo_product_by_default.png" : promotion.getBaseProduct().image}' />
@@ -102,11 +102,15 @@
  <h:inputHidden value="#{catalogBean.latitude}" id="latitude"/>
  </h:form>
  
-    <div id="map" style="height: 400px; width: 100%;"></div>
+    <div id="map" style="height: 400px; width: 100%;" data-id_item="id_#{promotion.id}"></div>
   <script type="text/javascript">
 // Initialize and add the map
-function initMap() {
-
+function initMap(id_item) { console.log('iddd : '+id_item);
+// 		var element_script = document.createElement('script'); element_script.setAttribute('src','https://maps.googleapis.com/maps/api/js?key=AIzaSyDjK4s5E_XSHlbogF3XVu2kNpGxFCIBDdc&amp;sensor=false&amp;libraries=geometry');
+// 		var notre_variable = document.getElementById('global').appendChild(element_script);
+// 		notre_variable.addEventListener("load", function() { }, false);
+	  
+		
 		 var xA =  48.8566101;//document.getElementById("essaigmap:longitude").value;
 		 var yA = 2.3514992;//document.getElementById("essaigmap:latitude").value;
 			
@@ -116,12 +120,10 @@ function initMap() {
 		      zoom: 10,
 		      center: pointA
 		    },
-		    map = new google.maps.Map(document.getElementById('map'), myOptions),
+		    map = new google.maps.Map(document.querySelectorAll('div[data-id_item="'+id_item+'"]')[0], myOptions),
 		    // Instantiate a directions service.
 		    directionsService = new google.maps.DirectionsService,
-		    directionsDisplay = new google.maps.DirectionsRenderer({
-		      map: map
-		    }),
+		    directionsDisplay = new google.maps.DirectionsRenderer({ map: map }),
 		    markerA = new google.maps.Marker({
 		      position: pointA,
 		      title: "point A",
@@ -135,7 +137,19 @@ function initMap() {
 		      map: map
 		    });
 		  
-		  
+		  function calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB) {
+			  directionsService.route({
+			    origin: pointA,
+			    destination: pointB,
+			    travelMode: google.maps.TravelMode.WALKING
+			  }, function(response, status) {
+			    if (status == google.maps.DirectionsStatus.OK) { //console.log('On affiche ou pas !!!')
+			      directionsDisplay.setDirections(response);
+			    } else {
+			      window.alert('Directions request failed due to ' + status);
+			    }
+			  });
+			}
 		//promotion.getShopList().get(0).getAddress().getCoordinates().getLatitude()
 		  
 		  
@@ -157,25 +171,15 @@ function initMap() {
 
 		  // get route from A to B
 		  calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB);
+		
+		
+	}
 
-		}
 
 
-
-		function calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB) {
-		  directionsService.route({
-		    origin: pointA,
-		    destination: pointB,
-		    travelMode: google.maps.TravelMode.WALKING
-		  }, function(response, status) {
-		    if (status == google.maps.DirectionsStatus.OK) {
-		      directionsDisplay.setDirections(response);
-		    } else {
-		      window.alert('Directions request failed due to ' + status);
-		    }
-		  });
-		}	
+			
     </script>
+
     </div>
 				</div>
 				<div class="w3-col s6 w3-row">
