@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedProperty;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,10 +78,29 @@ public class CatalogBean {
 	 */
 	private Integer searchPerimeter = 11;
 
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
 	/**
 	 * Message d'avertissement si l'adresse n'existe pas.
 	 */
 	private String addressWarning;
+	
+	public double longitude = 48.8566101;
+	public double latitude =  2.3514992;
 
 	public CatalogBean() {
 
