@@ -118,7 +118,30 @@ function initMap(id_item) { console.log('iddd : '+id_item); console.log(geolocat
 		var xB= document.querySelector(".latitudeClass"+id_item).value;
 		 var yB= document.querySelector(".longitudeClass"+id_item).value;
 		 
-			
+		 
+		var element1 = document.createElement('input');
+		 element1.setAttribute('type','hidden');
+		 element1.value = xA;
+		 element1.setAttribute('class','JavaLatUser'+id_item);
+		 
+		 var element2 = document.createElement('input');
+		 element2.setAttribute('type','hidden');
+		 element2.value = yA;
+		 element2.setAttribute('class','JavaLongUser'+id_item);
+		 
+		 var Parent1 = document.querySelector(".latitudeClass"+id_item).appendChild(element1);
+		 var Parent2 = document.querySelector(".longitudeClass"+id_item).appendChild(element2);
+		 
+	//	 var element_script = document.createElement('input'); element_script.setAttribute('value',xA);
+	//	var notre_variable = document.getElementById('global').appendChild(element_script);
+	//	notre_variable.addEventListener("load", function() { }, false);
+	
+	var xC= document.querySelector(".JavaLatUser"+id_item).value;
+		 var yC= document.querySelector(".JavaLongUser"+id_item).value;
+		 
+		 console.log('lat:'+xC);
+		 console.log('long:'+yC);
+		 
 		  var pointA = new google.maps.LatLng(xA, yA),
 		    pointB = new google.maps.LatLng(xB, yB),
 		    myOptions = {
