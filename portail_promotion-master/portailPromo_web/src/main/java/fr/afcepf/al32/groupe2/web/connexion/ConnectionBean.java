@@ -1,14 +1,10 @@
 package fr.afcepf.al32.groupe2.web.connexion;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.annotation.SessionScope;
 
-import fr.afcepf.al32.groupe2.entity.Registration;
 import fr.afcepf.al32.groupe2.entity.User;
 import fr.afcepf.al32.groupe2.service.IAuthenticationService;
 
@@ -29,9 +25,16 @@ public class ConnectionBean {
 
 	public String connect() {
 		String suite="/invite/connexion/simpleConnexion";
-		
-		User newUser = authenticationService.findOneByLoginAndPassword(login, password);
-         
+		//AQ1905
+		// ws_authentification.base_url=http://localhost:8088/portail_promotion_ws_authentification/rest/auth
+		String urlAuth = "http://localhost:8088/portail_promotion_ws_authentification/rest/auth/login" +
+				"?login=" + login + "&password=" + password;
+		RestTemplate restTemplate = new RestTemplate();
+		Long userId = restTemplate.getForObject(urlAuth, Long.class);
+
+		User newUser = authenticationService.findOneById(userId);
+		//AQ1905
+
 		if(newUser != null) {
 			loggedUser = newUser;
 			suite = "/invite/fichesPromotion/pageAffichagePromotions";

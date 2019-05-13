@@ -9,13 +9,17 @@ import fr.afcepf.al32.groupe2.service.IAuthenticationService;
 
 @Component
 public class AuthenticationService implements IAuthenticationService {
-	
+
 	@Autowired
 	private UserDao userDao;
-	
+
+	@Override
+	public User findOneById(Long id) {
+		return userDao.findOneById(id);
+	}
+
 	@Override
 	public User findOneByLoginAndPassword(String login, String password) {
 		return userDao.findOneByLoginAndPassword(login, password);
 	}
-
 }
