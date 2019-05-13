@@ -10,13 +10,14 @@ import fr.afcepf.al33.wsauthentification.service.itf.IAuthenticationService;
 
 @Component
 public class AuthenticationService implements IAuthenticationService {
-	
+
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Override
-	public User findOneByLoginAndPassword(String login, String password) {
-		return userDao.findOneByLoginAndPassword(login, password);
+	public Long getUserIdByLoginAndPassword(String login, String password) {
+		User user = userDao.findOneByLoginAndPassword(login, password);
+		return user.getId();
 	}
 
 }
