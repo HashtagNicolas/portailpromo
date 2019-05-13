@@ -6,13 +6,17 @@
 
 <ui:component>
 	<figure class="FichePromotion w3-mobile w3-col s3 l3 w3-row">
+	<h:form>
 	<div class="w3-col s12"
 		onclick="(function() { document.getElementById('id_#{promotion.id}').style.display='block'; initMap('id_#{promotion.id}'); })()" >
 		<div class="product-image w3-center">
 			<h:graphicImage class="w3-image" alt="Promotions" title="Promotion"
 				value='../../Ressources/Images/product/#{promotion.getBaseProduct().image == null ? "img_promo_product_by_default.png" : promotion.getBaseProduct().image}' />
 		</div>
+		<!--  <f:actionListener binding="#{catalogBean.submit()}" />
+		   <h:commandButton value="submit" onclick="getLatLongUser()" action="#{catalogBean.submit()}" />  --> 
 	</div>
+	</h:form>
 	<div class="w3-col s12 w3-row">
 		<div class="w3-col s12 w3-center w3-padding-16">
 			<h:outputText class="w3-mobile w3-large" value="#{promotion.name}" />
@@ -101,8 +105,15 @@
      <h:form>
  <h:inputText class="longitudeClassid_#{promotion.id}" value="#{promotion.getShopList().get(0).getAddress().getCoordinates().getLongitude()}" id="longitude" />
  <h:inputText class="latitudeClassid_#{promotion.id}" value="#{promotion.getShopList().get(0).getAddress().getCoordinates().getLatitude()}" id="latitude" />
- </h:form>  
+    <h:inputText class="JavaLatUserid_#{promotion.id}" value="#{catalogBean.latitude}" ></h:inputText>
+    <h:inputText class="JavaLongUserid_#{promotion.id}" value="#{catalogBean.longitude}" ></h:inputText>
+</h:form> 
     </div>
+    <h:form>
+    <!-- <h:commandButton value="submit" action="#{catalogBean.distanceMeth}"/>
+    <h:commandButton value="submit" onclick="document.getLatLongUser('id_#{promotion.id}')" action="#{catalogBean.submit}" /> -->
+    <h:inputText class ="Distanceid_#{promotion.id}"></h:inputText>
+    </h:form> 
   <script type="text/javascript">
 // Initialize and add the map
 function initMap(id_item) { console.log('iddd : '+id_item); console.log(geolocationUser.latitude+' / '+geolocationUser.longitude);
@@ -119,28 +130,30 @@ function initMap(id_item) { console.log('iddd : '+id_item); console.log(geolocat
 		 var yB= document.querySelector(".longitudeClass"+id_item).value;
 		 
 		 
-		var element1 = document.createElement('input');
-		 element1.setAttribute('type','hidden');
-		 element1.value = xA;
-		 element1.setAttribute('class','JavaLatUser'+id_item);
+// 		var element1 = document.createElement('input');
+// 		 element1.setAttribute('type','hidden');
+// 		 element1.value = xA;
+// 		 element1.setAttribute('class','JavaLatUser'+id_item);
 		 
-		 var element2 = document.createElement('input');
-		 element2.setAttribute('type','hidden');
-		 element2.value = yA;
-		 element2.setAttribute('class','JavaLongUser'+id_item);
+// 		 var element2 = document.createElement('input');
+// 		 element2.setAttribute('type','hidden');
+// 		 element2.value = yA;
+// 		 element2.setAttribute('class','JavaLongUser'+id_item);
 		 
-		 var Parent1 = document.querySelector(".latitudeClass"+id_item).appendChild(element1);
-		 var Parent2 = document.querySelector(".longitudeClass"+id_item).appendChild(element2);
+// 		 var Parent1 = document.querySelector(".latitudeClass"+id_item).appendChild(element1);
+// 		 var Parent2 = document.querySelector(".longitudeClass"+id_item).appendChild(element2);
 		 
 	//	 var element_script = document.createElement('input'); element_script.setAttribute('value',xA);
 	//	var notre_variable = document.getElementById('global').appendChild(element_script);
 	//	notre_variable.addEventListener("load", function() { }, false);
 	
-	var xC= document.querySelector(".JavaLatUser"+id_item).value;
-		 var yC= document.querySelector(".JavaLongUser"+id_item).value;
-		 
-		 console.log('lat:'+xC);
-		 console.log('long:'+yC);
+         element1 = document.querySelector(".JavaLatUser"+id_item);
+         element1.value = xA;
+         
+		 element2 = document.querySelector(".JavaLongUser"+id_item);
+		 element2.value = yA;
+	//	 console.log('lat:'+xC);
+	//	 console.log('long:'+yC);
 		 
 		  var pointA = new google.maps.LatLng(xA, yA),
 		    pointB = new google.maps.LatLng(xB, yB),
@@ -178,9 +191,10 @@ function initMap(id_item) { console.log('iddd : '+id_item); console.log(geolocat
 			    }
 			  });
 			}
+		  
 		//promotion.getShopList().get(0).getAddress().getCoordinates().getLatitude()
 		  
-		  
+		
 		  
 		//  var flightPlanCoordinates = [
 		//	    {lat: 51.7519, lng: -1.2578},
@@ -201,9 +215,35 @@ function initMap(id_item) { console.log('iddd : '+id_item); console.log(geolocat
 		  calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB);
 		
 		
+		  function distance(xA,yA,xB,yB) {
+				var R = 6371; // km (change this constant to get miles)
+				var dLat = (xB-xA) * Math.PI / 180;
+				var dLon = (yB-yA) * Math.PI / 180;
+				var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(xA * Math.PI / 180 ) * Math.cos(xB * Math.PI / 180 ) * Math.sin(dLon/2) * Math.sin(dLon/2);
+				var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+				var d = R * c;
+				 if (d > 1) {
+					 d = Math.round(d*100)/100+"km";
+					  } else {
+						  d = Math.round(d*1000)+"m";
+					  }
+				 var elt3 = document.querySelector(".Distance"+id_item);
+		         elt3.value =d;			
+			}
+		  
+		  distance(xA,yA,xB,yB);
 	}
 
+// function getLatLongUser(id_item){
+//    var element1 = document.querySelector(".JavaLatUser"+id_item);
+//    	console.log(geolocationUser.latitude);
+//     element1.value = geolocationUser.latitude;
+// 	var element2 = document.querySelector(".JavaLongUser"+id_item);
+// 	 element2.value = geolocationUser.longitude;
 
+// console.log(element2.value +'coucou');
+// console.log(element1.value);
+// }
 
 			
     </script>

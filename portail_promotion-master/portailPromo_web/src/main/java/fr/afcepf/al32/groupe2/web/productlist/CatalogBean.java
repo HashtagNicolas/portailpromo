@@ -99,8 +99,9 @@ public class CatalogBean {
 	 */
 	private String addressWarning;
 	
-	public double longitude = 48.8566101;
-	public double latitude =  2.3514992;
+	public double longitude;
+	public double latitude;
+	public double distance;
 
 	public CatalogBean() {
 
@@ -312,6 +313,36 @@ public class CatalogBean {
 
 	public void setTopPromotionsClient(List<PromotionTemplateResultDto> topPromotionsClient) {
 		this.topPromotionsClient = topPromotionsClient;
+	}
+	
+	
+	
+	public double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
+
+	public double distanceMeth() {
+		double long1 = 48.816444;
+		double lat1 = 2.3275829;
+		double long2 = getLongitude();
+		double lat2 = getLatitude();
+		if ((lat1 == lat2) && (long1 == long2)) {
+			return 0;
+		}
+		else {
+			double theta = long1 - long2;
+			double dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(lat2)) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.cos(Math.toRadians(theta));
+			dist = Math.acos(dist);
+			dist = Math.toDegrees(dist);
+			dist = dist * 60 * 1.1515* 1.609344;
+			
+		setDistance(dist);
+			return (dist);
+		}
 	}
 
 }
