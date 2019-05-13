@@ -96,13 +96,13 @@
 	<div class="w3-col">			
 				   <h3>My Google Maps Demo</h3>
     <!--The div element for the map -->
-   
-    <h:form id="essaigmap">
- <h:inputHidden value="#{catalogBean.longitude}" id="longitude" />
- <h:inputHidden value="#{catalogBean.latitude}" id="latitude"/>
- </h:form>
  
-    <div id="map" style="height: 400px; width: 100%;" data-id_item="id_#{promotion.id}"></div>
+    <div id="map" style="height: 400px; width: 100%;" data-id_item="id_#{promotion.id}">
+     <h:form>
+ <h:inputText class="longitudeClassid_#{promotion.id}" value="#{promotion.getShopList().get(0).getAddress().getCoordinates().getLongitude()}" id="longitude" />
+ <h:inputText class="latitudeClassid_#{promotion.id}" value="#{promotion.getShopList().get(0).getAddress().getCoordinates().getLatitude()}" id="latitude" />
+ </h:form>  
+    </div>
   <script type="text/javascript">
 // Initialize and add the map
 function initMap(id_item) { console.log('iddd : '+id_item); console.log(geolocationUser.latitude+' / '+geolocationUser.longitude);
@@ -114,9 +114,13 @@ function initMap(id_item) { console.log('iddd : '+id_item); console.log(geolocat
 		 var xA = geolocationUser.latitude;
 		 var yA = geolocationUser.longitude;
 		 
+		
+		var xB= document.querySelector(".latitudeClass"+id_item).value;
+		 var yB= document.querySelector(".longitudeClass"+id_item).value;
+		 
 			
 		  var pointA = new google.maps.LatLng(xA, yA),
-		    pointB = new google.maps.LatLng(48.8144, 2.31606),
+		    pointB = new google.maps.LatLng(xB, yB),
 		    myOptions = {
 		      zoom: 10,
 		      center: pointA
