@@ -148,7 +148,7 @@
 						<f:selectItem itemLabel="Choisissez un produit..." itemValue="#{null}"/>
 						<f:selectItems value="#{addPromotionBean.products}" var="product"
 							itemValue="#{product.id}"
-							itemLabel="#{product.referenceProduct.name}" />
+							itemLabel="#{product.referenceProduct.name} ( #{product.getInitPrice()} €)" />
 					</h:selectOneMenu>
 				</h:panelGroup>
 				<h:panelGroup class="w3-padding-24" layout="block">

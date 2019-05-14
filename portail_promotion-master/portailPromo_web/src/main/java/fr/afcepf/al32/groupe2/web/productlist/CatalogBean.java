@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedProperty;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;

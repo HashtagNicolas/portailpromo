@@ -103,11 +103,20 @@ public class RechercheOrchestrateur {
 				SearchByCategoryAndKeywordsResponseDto.class);
 		listeFinale = searchByCategoryAndKeywordsResponseDto.getPromotionsDto();
 
+		List<PromotionDto> finaleTraitee = new ArrayList<PromotionDto>();
 		if (adresseValide) {
-			listeFinale.retainAll(promotionDtosbyGeoRecherche);
+			//listeFinale.retainAll(promotionDtosbyGeoRecherche);
+			
+			
+			for (PromotionDto promotionDto : listeFinale) {
+				for (PromotionDto promotionDto2 : promotionDtosbyGeoRecherche) {
+					if (promotionDto2.getId().equals(promotionDto.getId())) {
+						finaleTraitee.add(promotionDto2);
+					}
+				}
+			}
 		}
-
-		return listeFinale;
+		return finaleTraitee;
 	}
 
 	private List<PromotionDto> traitementByShop(List<ShopDto> shopDtos) {
@@ -120,34 +129,12 @@ public class RechercheOrchestrateur {
 			e.printStackTrace();
 		}
 
+		System.out.println(entity);
 		SearchByShopResponseDto searchByShopResponseDto = restTemplate.postForObject(url_byShop, entity,
 				SearchByShopResponseDto.class);
 
 		return searchByShopResponseDto.getPromotionsDto();
 
-	}
-
-	private List<PromotionDto> traitementByCategory(Long id, boolean adresseValide,
-			List<PromotionDto> promotionDtosbyGeoRecherche) {
-		List<PromotionDto> listeFinale;
-
-		String url_byCategory = base_url_recherche + "/byCategory";
-
-		HttpEntity<String> entity = null;
-
-		try {
-			entity = constructRequestBody(new CategoryProductDto(id));
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		SearchByCategoryResponseDto searchByCategoryResponseDto = restTemplate.postForObject(url_byCategory, entity,
-				SearchByCategoryResponseDto.class);
-		listeFinale = searchByCategoryResponseDto.getPromotionsDto();
-
-		if (adresseValide) {
-			listeFinale.retainAll(promotionDtosbyGeoRecherche);
-		}
-		return listeFinale;
 	}
 
 	private List<PromotionDto> traitementByKeyWords(List<String> mots, boolean adresseValide,
@@ -163,14 +150,27 @@ public class RechercheOrchestrateur {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
+		
+		System.out.println(entity);
+		
 		SearchByKeywordsResponseDto searchByKeywordsResponseDto = restTemplate.postForObject(url_Keywords, entity,
 				SearchByKeywordsResponseDto.class);
 		listeFinale = searchByKeywordsResponseDto.getPromotionsDto();
 
+		List<PromotionDto> finaleTraitee = new ArrayList<PromotionDto>();
 		if (adresseValide) {
-			listeFinale.retainAll(promotionDtosbyGeoRecherche);
+			//listeFinale.retainAll(promotionDtosbyGeoRecherche);
+			
+			
+			for (PromotionDto promotionDto : listeFinale) {
+				for (PromotionDto promotionDto2 : promotionDtosbyGeoRecherche) {
+					if (promotionDto2.getId().equals(promotionDto.getId())) {
+						finaleTraitee.add(promotionDto2);
+					}
+				}
+			}
 		}
-		return listeFinale;
+		return finaleTraitee;
 	}
 
 	private HttpEntity<String> constructRequestBody(Object valueToJsonify) throws JsonProcessingException {
