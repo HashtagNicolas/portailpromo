@@ -212,3 +212,10 @@ body {
 color:black;
 background:white
 }
+
+/* .map *, .map *:before, .map *:after {
+   -webkit-transform: none !important; 
+    max-width: none!important;
+     max-height: none!important;
+}
+*/

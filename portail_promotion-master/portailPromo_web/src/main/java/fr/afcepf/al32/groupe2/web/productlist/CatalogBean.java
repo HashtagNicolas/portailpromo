@@ -128,7 +128,7 @@ public class CatalogBean {
 			e.printStackTrace();
 		}
 
-
+		
 		return resultDto.getTemplates();
 	}
 

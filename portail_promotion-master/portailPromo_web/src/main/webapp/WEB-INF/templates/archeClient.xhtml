@@ -162,6 +162,15 @@
 									href="../../commercant/gererReservationCommercant/gererReservation.xhtml"
 									class="w3-btn w3-teal w3-padding-16"> Gérer réservations </a>
 							</h:panelGroup>
+							<h:panelGroup class="w3-mobile w3-bar-item"
+								rendered="#{not empty connectionBean.loggedUser and connectionBean.loggedUser['class'].simpleName eq 'Shopkeeper'}"
+								layout="block">
+								<h:commandButton action="#{addPromotionBean.getPromotionCommercant}"
+									value="Mes Promotions" class="w3-btn w3-teal w3-padding-16" ><a
+									href="../../invite/fichesPromotion/pageAffichagePromotions"
+									class="w3-btn w3-teal w3-padding-16"></a>
+									</h:commandButton>
+							</h:panelGroup>
 							<!-- /ShopKeeper section -->
 
 							<!-- Global section -->
@@ -187,14 +196,12 @@
 		</h:form>
 	</div>
 	</header>
-
 	<div id="global" class=" w3-center w3-col s12"
 		style="min-height: 500px">  
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjK4s5E_XSHlbogF3XVu2kNpGxFCIBDdc&amp;sensor=false&amp;libraries=geometry">
   </script>
 		<ui:insert name="content"></ui:insert>
 	</div>
-
 	<footer id="realfooter" class=" w3-teal w3-col s12">
 	<div id="apropos" class="footer">
 		<ul>

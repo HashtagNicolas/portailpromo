@@ -313,7 +313,7 @@ function initMap(id_item) { console.log('iddd : '+id_item); console.log(geolocat
 								value="#{promotion.getBaseProduct().referenceProduct.salesUnit.name}" />
 							<h:commandButton action="#{bookBean.book}"
 								disabled="#{empty connectionBean.loggedUser}" value="Réserver"
-								class="w3-button w3-teal w3-hover-dark-grey w3-col s6 w3-padding-16">
+								class="w3-button w3-teal w3-hover-dark-grey w3-col s6 w3-padding-16" >
 								<f:param name="promotion" value="#{promotion.id}" />
 							</h:commandButton>
 						</h:form>

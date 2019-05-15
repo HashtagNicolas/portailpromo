@@ -1,10 +1,25 @@
 package fr.afcepf.al32.groupe2.web.connexion;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.PreDestroy;
+import javax.faces.context.FacesContext;
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.annotation.SessionScope;
 
+import fr.afcepf.al32.groupe2.entity.Promotion;
+import fr.afcepf.al32.groupe2.entity.Shop;
+import fr.afcepf.al32.groupe2.entity.Shopkeeper;
 import fr.afcepf.al32.groupe2.entity.User;
 import fr.afcepf.al32.groupe2.service.IAuthenticationService;
 
@@ -33,6 +48,7 @@ public class ConnectionBean {
 		Long userId = restTemplate.getForObject(urlAuth, Long.class);
 
 		User newUser = authenticationService.findOneById(userId);
+		
 		//AQ1905
 
 		if(newUser != null) {
@@ -48,8 +64,12 @@ public class ConnectionBean {
 
 	public String logout() {
 		loggedUser = null;
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().invalidateSession();
+		
 
-		return "/invite/fichesPromotion/pageAffichagePromotions";
+		return "../../index.xhtml";
 	}
 
 	public String getLogin() {
@@ -75,5 +95,7 @@ public class ConnectionBean {
 	public String getMessage() {
 		return message;
 	}
+	
+	
 
 }

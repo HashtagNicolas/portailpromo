@@ -66,7 +66,7 @@ public class BookBean {
 		
 		quantityBooked = 1d;
 		
-		return "client/reservationClient/gererReservationClient.xhtml";
+		return "../../client/reservationClient/gererReservationClient.xhtml";
 	}
 
 	public Double getQuantityBooked() {

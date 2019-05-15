@@ -76,7 +76,7 @@ public class Shop implements IFollowableElement{
 	@MapKey(name="id")
 	private Map<Long, ShopRegistration> registrations;
 
-	@ManyToMany(mappedBy="shops", cascade=CascadeType.ALL)
+	@ManyToMany(mappedBy="shops", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@MapKey(name="id")
 	private Map<Long, Promotion> promotions;
 	
