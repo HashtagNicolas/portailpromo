@@ -26,7 +26,7 @@ import javax.swing.text.html.parser.Entity;
 public class RechercheOrchestrateur {
 
 	private RestTemplate restTemplate;
-	private String base_url_rechercheGeo, base_url_validationGeo, base_url_recherche = null;
+	private String base_url_rechercheGeo, base_url_validationGeo, base_url_getCoordonneesGeo, base_url_recherche = null;
 	// "http://localhost:8082/wsRechercheGeo/rest/rechercheGeo/commerce?source=montrouge&perimetre=10
 
 	public RechercheOrchestrateur() {
@@ -41,6 +41,7 @@ public class RechercheOrchestrateur {
 			this.base_url_rechercheGeo = props.getProperty("ws_recherche.base_url_rechercheGeo");
 			this.base_url_validationGeo = props.getProperty("ws_recherche.base_url_validationGeo");
 			this.base_url_recherche = props.getProperty("ws_recherche.base_url_recherche");
+			this.base_url_getCoordonneesGeo =  props.getProperty("ws_recherche.base_url_getCoordonneesGeo");
 
 			System.out.println(base_url_validationGeo);
 			System.out.println(base_url_recherche);
@@ -61,10 +62,13 @@ public class RechercheOrchestrateur {
 		ResponseWsDto responseWsDto = null;
 		List<ShopDto> shopDtos;
 		List<PromotionDto> promotionDtosbyGeoRecherche = null;
+		List<Double> coordonnees = new ArrayList<Double>();
 
 		if (estUneRechercheDeGeoApi) {
 			String urlValidation = base_url_validationGeo + "?source=" + source;
 			ResponseGeoApiDto geoApiDto = restTemplate.getForObject(urlValidation, ResponseGeoApiDto.class);
+			String urlCoordonnees = base_url_getCoordonneesGeo + "?source=" + source;
+			coordonnees = (List<Double>) restTemplate.getForObject(urlCoordonnees, List.class);
 
 			adresseValide = geoApiDto.getStatus().equals("OK");
 			if (adresseValide) {
@@ -78,18 +82,22 @@ public class RechercheOrchestrateur {
 		List<PromotionDto> listeFinale = null;
 
 		if (categoryId != null && categoryId != 0L) {
-			listeFinale = traitementByCategoryEtMotCles(categoryId, mots, adresseValide, promotionDtosbyGeoRecherche);
+			if (!estUneRechercheDeGeoApi)
+				
+			listeFinale = traitementByCategoryEtMotCles(categoryId, mots, adresseValide, promotionDtosbyGeoRecherche, estUneRechercheDeGeoApi);
+			
 		} else {
-			listeFinale = traitementByKeyWords(mots, adresseValide, promotionDtosbyGeoRecherche);
+			listeFinale = traitementByKeyWords(mots, adresseValide, promotionDtosbyGeoRecherche, estUneRechercheDeGeoApi);
 		}
 
-		return new OrchestratorResearchDtoResponse(categoryId, mots, source, perimetre, listeFinale, adresseValide);
+		return new OrchestratorResearchDtoResponse(categoryId, mots, source, perimetre, listeFinale, adresseValide, coordonnees );
 	}
 
 	private List<PromotionDto> traitementByCategoryEtMotCles(Long id, List<String> mots, boolean adresseValide,
-			List<PromotionDto> promotionDtosbyGeoRecherche) {
+			List<PromotionDto> promotionDtosbyGeoRecherche, boolean estUneRechercheDeGeoApi) {
 
 		List<PromotionDto> listeFinale = null;
+		List<PromotionDto> vide = new ArrayList<PromotionDto>();
 
 		String url_Keywords = base_url_recherche + "/byCategoryAndKeywords";
 
@@ -116,7 +124,19 @@ public class RechercheOrchestrateur {
 				}
 			}
 		}
-		return finaleTraitee;
+		
+		if(finaleTraitee.size() == 0) {
+			if(estUneRechercheDeGeoApi) {
+				return vide;
+			}
+			else {
+				return listeFinale;
+			}
+			
+		}
+		else {
+			return finaleTraitee;
+		}
 	}
 
 	private List<PromotionDto> traitementByShop(List<ShopDto> shopDtos) {
@@ -138,8 +158,9 @@ public class RechercheOrchestrateur {
 	}
 
 	private List<PromotionDto> traitementByKeyWords(List<String> mots, boolean adresseValide,
-			List<PromotionDto> promotionDtosbyGeoRecherche) {
+			List<PromotionDto> promotionDtosbyGeoRecherche, boolean estUneRechercheDeGeoApi) {
 		List<PromotionDto> listeFinale = null;
+		List<PromotionDto> vide = new ArrayList<PromotionDto>();
 
 		String url_Keywords = base_url_recherche + "/byKeywords";
 
@@ -170,7 +191,18 @@ public class RechercheOrchestrateur {
 				}
 			}
 		}
-		return finaleTraitee;
+		if(finaleTraitee.size() == 0) {
+			if(estUneRechercheDeGeoApi) {
+				return vide;
+			}
+			else {
+				return listeFinale;
+			}
+			
+		}
+		else {
+			return finaleTraitee;
+		}
 	}
 
 	private HttpEntity<String> constructRequestBody(Object valueToJsonify) throws JsonProcessingException {

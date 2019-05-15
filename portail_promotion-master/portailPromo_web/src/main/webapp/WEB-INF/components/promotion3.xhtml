@@ -121,9 +121,16 @@ function initMap(id_item) { console.log('iddd : '+id_item); console.log(geolocat
 // 		var notre_variable = document.getElementById('global').appendChild(element_script);
 // 		notre_variable.addEventListener("load", function() { }, false);
 	  
+	  var latVilleSelec = document.getElementById('form1:latVilleSelec').value;
+	  var longVilleSelec = document.getElementById('form1:longVilleSelec').value;
 		
-		 var xA = geolocationUser.latitude;
-		 var yA = geolocationUser.longitude;
+	  if (latVilleSelec == 0 || latVilleSelec == null || longVilleSelec == 0 || longVilleSelec == null ){
+		     var xA = geolocationUser.latitude;
+			 var yA = geolocationUser.longitude;
+					  } else {
+						   xA = latVilleSelec;
+						   yA = longVilleSelec;
+					  }
 		 
 		
 		var xB= document.querySelector(".latitudeClass"+id_item).value;
@@ -223,9 +230,9 @@ function initMap(id_item) { console.log('iddd : '+id_item); console.log(geolocat
 				var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 				var d = R * c;
 				 if (d > 1) {
-					 d = Math.round(d*100)/100+"km";
+					 d = Math.round(d*100)/100*1.33+"km";
 					  } else {
-						  d = Math.round(d*1000)+"m";
+						  d = Math.round(d*1000)*1.33+"m";
 					  }
 				 var elt3 = document.querySelector(".Distance"+id_item);
 		         elt3.value =d;			

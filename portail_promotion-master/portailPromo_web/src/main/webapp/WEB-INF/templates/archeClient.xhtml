@@ -30,7 +30,7 @@
 
 	<header class="w3-col s12">
 	<div class="navbar">
-		<h:form>
+		<h:form id="form1">
 			<div class="topnav w3-mobile w3-teal w3-row-padding" id="myTopNav">
 				<div class="w3-bar w3-teal w3-mobile">
 					<div class="w3-teal w3-mobile w3-col s2 ">
@@ -56,6 +56,8 @@
 								class="w3-bar-item w3-btn w3-light-gray w3-medium w3-text-teal w3-col s1"
 								value="Go" />
 						</div>
+						<h:inputHidden id="latVilleSelec" value="#{catalogBean.latitudeVilleSelec}"></h:inputHidden>
+						<h:inputHidden id="longVilleSelec" value="#{catalogBean.longitudeVilleSelec}"></h:inputHidden>
 					</div>
 					<div class="w3-teal w3-mobile w3-col s3">
 						<div class="w3-bar-item w3-teal">

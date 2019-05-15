@@ -101,6 +101,9 @@ public class CatalogBean {
 	public double longitude;
 	public double latitude;
 	public double distance;
+	
+	private  double latitudeVilleSelec;
+	private double longitudeVilleSelec;
 
 	public CatalogBean() {
 
@@ -149,6 +152,19 @@ public class CatalogBean {
 		} else {
 			addressWarning = "";
 		}
+		
+		
+		if(orchestratorResponse.getCoordonnees().size() == 0)
+		{
+			setLatitudeVilleSelec(0);
+			setLongitudeVilleSelec(0);
+		}
+		else {
+			setLatitudeVilleSelec(orchestratorResponse.getCoordonnees().get(0));
+			setLongitudeVilleSelec(orchestratorResponse.getCoordonnees().get(1));
+		}
+		
+		
 		return "index";
 	}
 
@@ -316,6 +332,22 @@ public class CatalogBean {
 	
 	
 	
+	public double getLatitudeVilleSelec() {
+		return latitudeVilleSelec;
+	}
+
+	public void setLatitudeVilleSelec(double latitudeVilleSelec) {
+		this.latitudeVilleSelec = latitudeVilleSelec;
+	}
+
+	public double getLongitudeVilleSelec() {
+		return longitudeVilleSelec;
+	}
+
+	public void setLongitudeVilleSelec(double longitudeVilleSelec) {
+		this.longitudeVilleSelec = longitudeVilleSelec;
+	}
+
 	public double getDistance() {
 		return distance;
 	}
