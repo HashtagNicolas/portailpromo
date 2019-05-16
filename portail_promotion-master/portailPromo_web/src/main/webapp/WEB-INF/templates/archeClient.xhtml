@@ -94,10 +94,10 @@
 								<h:outputLabel id="lblDistanceKm"
 									value="#{catalogBean.searchPerimeter} km" />
 							</div>
-							<span>1km</span>
+							<span>0km</span>
 							<h:inputText id="myRange" value="#{catalogBean.searchPerimeter}">
 								<f:passThroughAttributes
-									value="#{{'type':'range', 'min':'1', 'max':'20', 'step':'1'}}" />
+									value="#{{'type':'range', 'min':'0', 'max':'20', 'step':'1'}}" />
 								<f:ajax event="change" execute="myRange" render="lblDistanceKm" />
 							</h:inputText>
 							<span>20km</span>
