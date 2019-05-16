@@ -40,6 +40,7 @@
 							alt="Logo de promo 32" /></a>
 					</div>
 					<!--  barre de recherche par mots clés saisis et catégorie sélectionnée -->
+					<h:panelGroup layout="block" rendered ="#{empty connectionBean.loggedUser or connectionBean.loggedUser['class'].simpleName eq 'Client'}">
 					<div class="w3-teal w3-mobile w3-row w3-col s7 w3-padding-24">
 						<h:selectOneMenu id="escape02"
 							value="#{catalogBean.selectedCategory}"
@@ -59,7 +60,8 @@
 						<h:inputHidden id="latVilleSelec" value="#{catalogBean.latitudeVilleSelec}"></h:inputHidden>
 						<h:inputHidden id="longVilleSelec" value="#{catalogBean.longitudeVilleSelec}"></h:inputHidden>
 					</div>
-					<div class="w3-teal w3-mobile w3-col s3">
+					</h:panelGroup>
+					<div class="w3-teal w3-right w3-col s3">
 						<div class="w3-bar-item w3-teal">
 							<img style="width: 70%; height: 70%;"
 								src="../../Ressources/Images/slogan/Promo_slogan.png"
@@ -71,6 +73,7 @@
 				<div
 					class="bottomnavrr w3-bar w3-teal w3-row w3-mobile w3-padding-small"
 					id="myBottomnav">
+					<h:panelGroup layout="block" rendered ="#{empty connectionBean.loggedUser or connectionBean.loggedUser['class'].simpleName eq 'Client'}">
 					<div class="w3-bar w3-bar-item w3-teal w3-mobile w3-col s7">
 						<div class="w3-dropdown-hover w3-mobile">
 							<div class="w3-btn w3-teal w3-padding-16">
@@ -127,6 +130,7 @@
 							</h:panelGroup>
 						</div>
 					</div>
+					</h:panelGroup>
 
 					<div class="w3-bar w3-teal w3-mobile w3-col s5 w3-padding-small">
 						<div class="w3-right w3-teal">
@@ -153,22 +157,20 @@
 								layout="block">
 								<a
 									href="../../commercant/fichePromotionDetailleeCommercant/formulaireAjoutPromotion.xhtml"
-									class="w3-btn w3-teal w3-padding-16"> Créer promotion </a>
+									class="w3-button w3-teal w3-padding-16"> Créer promotion </a>
 							</h:panelGroup>
 							<h:panelGroup class="w3-mobile w3-bar-item"
 								rendered="#{not empty connectionBean.loggedUser and connectionBean.loggedUser['class'].simpleName eq 'Shopkeeper'}"
 								layout="block">
 								<a
 									href="../../commercant/gererReservationCommercant/gererReservation.xhtml"
-									class="w3-btn w3-teal w3-padding-16"> Gérer réservations </a>
+									class="w3-button w3-teal w3-padding-16"> Gérer réservations </a>
 							</h:panelGroup>
 							<h:panelGroup class="w3-mobile w3-bar-item"
 								rendered="#{not empty connectionBean.loggedUser and connectionBean.loggedUser['class'].simpleName eq 'Shopkeeper'}"
 								layout="block">
 								<h:commandButton action="#{addPromotionBean.getPromotionCommercant}"
-									value="Mes Promotions" class="w3-btn w3-teal w3-padding-16" ><a
-									href="../../invite/fichesPromotion/pageAffichagePromotions"
-									class="w3-btn w3-teal w3-padding-16"></a>
+									value="Mes Promotions" class="w3-button w3-teal w3-padding-16" >
 									</h:commandButton>
 							</h:panelGroup>
 							<!-- /ShopKeeper section -->
@@ -176,7 +178,7 @@
 							<!-- Global section -->
 							<h:panelGroup class="w3-mobile w3-bar-item"
 								rendered="#{not empty connectionBean.loggedUser}" layout="block">
-								<a href="" class="w3-btn w3-teal w3-padding-16"> Profil </a>
+								<a href="" class="w3-button w3-teal w3-padding-16"> Profil </a>
 							</h:panelGroup>
 							<h:panelGroup class="w3-mobile w3-bar-item"
 								rendered="#{empty connectionBean.loggedUser}" layout="block">
@@ -186,7 +188,7 @@
 							<h:panelGroup class="w3-mobile w3-bar-item"
 								rendered="#{not empty connectionBean.loggedUser}" layout="block">
 								<h:commandButton action="#{connectionBean.logout}"
-									value="Déconnexion" class="w3-btn w3-teal w3-padding-16" />
+									value="Déconnexion" class="w3-button w3-teal w3-padding-16" />
 							</h:panelGroup>
 							<!-- /Global section -->
 						</div>
