@@ -4,6 +4,7 @@ import fr.afcepf.al32.groupe2.entity.*;
 import fr.afcepf.al32.groupe2.service.IFollowableElementService;
 import fr.afcepf.al32.groupe2.service.IServiceBaseProduct;
 import fr.afcepf.al32.groupe2.service.IServicePublish;
+import fr.afcepf.al32.groupe2.service.impl.EmailWServiceImpl;
 import fr.afcepf.al32.groupe2.web.connexion.ConnectionBean;
 import fr.afcepf.al32.groupe2.ws.itf.IWsPromoTemplate;
 import fr.afcepf.al32.groupe2.ws.wsPromoTemplate.dto.PromotionTemplateResultDto;
@@ -37,6 +38,11 @@ public class AddPromotionBean {
 
 	@Autowired
 	private IWsPromoTemplate topPromoDelegate;
+	
+    // bnm - 15/05/2019 implémentation envoi de courriels par web service
+	@Autowired
+	 EmailWServiceImpl emailService;
+
 
 	private List<PromotionTemplateResultDto> topPromoTemplates;
 
@@ -139,7 +145,8 @@ public class AddPromotionBean {
 		servicePublish.create(publish);
 		
 		followableElementService.notifySubscribers(shop);
-		
+	    // bnm - 15/05/2019 implémentation envoi de courriels par web service
+		emailService.sendEmailPromoOwner( shopkeeper, promotion);
 	}
 
 	private void createPackPromotion(Promotion promotion) {

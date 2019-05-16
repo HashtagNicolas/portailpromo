@@ -28,7 +28,7 @@
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 
-	
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -62,8 +62,11 @@
 			<groupId>org.mariadb.jdbc</groupId>
 			<artifactId>mariadb-java-client</artifactId>
 		</dependency>
-		<!-- <dependency> <groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId> 
-			<scope>runtime</scope> </dependency> -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
@@ -85,19 +88,19 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>de.flapdoodle.embed</groupId> -->
-<!-- 			<artifactId>de.flapdoodle.embed.mongo</artifactId> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>cz.jirutka.spring</groupId> -->
-<!-- 			<artifactId>embedmongo-spring</artifactId> -->
-<!-- 			<version>RELEASE</version> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.boot</groupId> -->
-<!-- 			<artifactId>spring-boot-starter-data-mongodb</artifactId> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>de.flapdoodle.embed</groupId> -->
+		<!-- <artifactId>de.flapdoodle.embed.mongo</artifactId> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>cz.jirutka.spring</groupId> -->
+		<!-- <artifactId>embedmongo-spring</artifactId> -->
+		<!-- <version>RELEASE</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.springframework.boot</groupId> -->
+		<!-- <artifactId>spring-boot-starter-data-mongodb</artifactId> -->
+		<!-- </dependency> -->
 	</dependencies>
 
 	<build>
