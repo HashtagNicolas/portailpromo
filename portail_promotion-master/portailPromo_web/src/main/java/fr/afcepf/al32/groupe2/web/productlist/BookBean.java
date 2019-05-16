@@ -66,12 +66,14 @@ public class BookBean {
 
         emailService.sendEmailReservation((Client) connectionBean.getLoggedUser(), reservation);
 
-        
-        
-        quantityBooked = 1d;
-        
-        return "client/reservationClient/gererReservationClient.xhtml";
-    }
+		promotionService.recherchePromotionParIdentifiant(id).decreaseAvailableQuantity(quantityBooked);
+
+		emailService.sendEmailReservation((Client) connectionBean.getLoggedUser(), reservation);
+		
+		quantityBooked = 1d;
+		
+		return "../../client/reservationClient/gererReservationClient.xhtml";
+	}
 
     public Double getQuantityBooked() {
         return quantityBooked;

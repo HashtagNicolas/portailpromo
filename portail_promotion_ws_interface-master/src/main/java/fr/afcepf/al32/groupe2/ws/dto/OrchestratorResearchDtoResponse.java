@@ -14,14 +14,17 @@ public class OrchestratorResearchDtoResponse {
     private List<PromotionDto> promotions;
 
     private Boolean addressValid;
+    
+    private List<Double> coordonnees;
 
-    public OrchestratorResearchDtoResponse(Long categoryId, List<String> keyWords, String source, Integer perimetre, List<PromotionDto> promotions, Boolean addressValid) {
+    public OrchestratorResearchDtoResponse(Long categoryId, List<String> keyWords, String source, Integer perimetre, List<PromotionDto> promotions, Boolean addressValid, List<Double> coordonnees) {
         this.categoryId = categoryId;
         this.keyWords = keyWords;
         this.source = source;
         this.perimetre = perimetre;
         this.promotions = promotions;
         this.addressValid = addressValid;
+        this.coordonnees= coordonnees;
     }
 
     public OrchestratorResearchDtoResponse(){}
@@ -73,4 +76,14 @@ public class OrchestratorResearchDtoResponse {
     public void setAddressValid(Boolean addressValid) {
         this.addressValid = addressValid;
     }
+
+	public List<Double> getCoordonnees() {
+		return coordonnees;
+	}
+
+	public void setCoordonnees(List<Double> coordonnees) {
+		this.coordonnees = coordonnees;
+	}
+    
+    
 }

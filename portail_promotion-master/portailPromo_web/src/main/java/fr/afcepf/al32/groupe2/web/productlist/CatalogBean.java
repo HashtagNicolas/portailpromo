@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedProperty;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +75,7 @@ public class CatalogBean {
 	/**
 	 * Attribut pour la recherche par lieu. Périmètre de recherche en km.
 	 */
-	private Integer searchPerimeter = 11;
+	private Integer searchPerimeter = 10;
 
 	public double getLongitude() {
 		return longitude;
@@ -98,10 +97,13 @@ public class CatalogBean {
 	 * Message d'avertissement si l'adresse n'existe pas.
 	 */
 	private String addressWarning;
-	
+
 	public double longitude;
 	public double latitude;
 	public double distance;
+
+	private  double latitudeVilleSelec;
+	private double longitudeVilleSelec;
 
 	public CatalogBean() {
 
@@ -117,11 +119,11 @@ public class CatalogBean {
 		//Correctif : gestion du nullPointerException sur TopPromotionTemplateResultDto
 		TopPromotionTemplateResultDto resultDto = null;
 		try {
-			
+
 			resultDto = promoClientService.searchByClientsFavoriteCategory(
 					Double.parseDouble(client.getAddress().getCoordinates().getLongitude()),
 					Double.parseDouble(client.getAddress().getCoordinates().getLatitude()), category);
-			
+
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
@@ -150,10 +152,23 @@ public class CatalogBean {
 		} else {
 			addressWarning = "";
 		}
+
+
+		if(orchestratorResponse.getCoordonnees().size() == 0)
+		{
+			setLatitudeVilleSelec(0);
+			setLongitudeVilleSelec(0);
+		}
+		else {
+			setLatitudeVilleSelec(orchestratorResponse.getCoordonnees().get(0));
+			setLongitudeVilleSelec(orchestratorResponse.getCoordonnees().get(1));
+		}
+
+
 		return "index";
 	}
 
-	public String searchByCategory(CategoryProduct category) { 
+	public String searchByCategory(CategoryProduct category) {
 		if (category != null) {
 			promotions = catalogService.searchByCategory(category);
 		}
@@ -164,30 +179,30 @@ public class CatalogBean {
 	public void initCatalogProduits() {
 
 		promotions = getAllPromotions();
-		
+
 		//TODO pour chaque promotions > getcatégorie de la promotion > put la categorie de la promotion dans une liste de catégorie
-//		for (Promotion promotion : promotions) {
-//
-//			List<String> categoryActive = new ArrayList<String>(); 
-//			categoryActive.add(promotion.getBaseProduct().getReferenceProduct().getCategoriesProduct().getName());
-//			System.out.println(categoryActive);		
-//
-//		}
+		//		for (Promotion promotion : promotions) {
+		//
+		//			List<String> categoryActive = new ArrayList<String>();
+		//			categoryActive.add(promotion.getBaseProduct().getReferenceProduct().getCategoriesProduct().getName());
+		//			System.out.println(categoryActive);
+		//
+		//		}
 
 		// à l'initialisation récupère dans une liste l'ensemble des catégories en base
 		categories = getAllRootCategories().stream().sorted(Comparator.comparing(CategoryProduct::getName))
 				.collect(Collectors.toList());
-		
+
 		//TODO gestion d'un utilisateur desincrit erreur  test => user :  root3  mdp :root
 		User user =  connectionBean.getLoggedUser();
 
 		if (user != null && user.getClass().equals(Client.class)) {
 			try {
-				
+
 				topPromotionsClient= trouverLesPromoPreferees((Client) user);
-				
+
 			} catch (NullPointerException e) {
-				
+
 				e.printStackTrace();
 			}
 
@@ -314,9 +329,25 @@ public class CatalogBean {
 	public void setTopPromotionsClient(List<PromotionTemplateResultDto> topPromotionsClient) {
 		this.topPromotionsClient = topPromotionsClient;
 	}
-	
-	
-	
+
+
+
+	public double getLatitudeVilleSelec() {
+		return latitudeVilleSelec;
+	}
+
+	public void setLatitudeVilleSelec(double latitudeVilleSelec) {
+		this.latitudeVilleSelec = latitudeVilleSelec;
+	}
+
+	public double getLongitudeVilleSelec() {
+		return longitudeVilleSelec;
+	}
+
+	public void setLongitudeVilleSelec(double longitudeVilleSelec) {
+		this.longitudeVilleSelec = longitudeVilleSelec;
+	}
+
 	public double getDistance() {
 		return distance;
 	}
@@ -339,8 +370,8 @@ public class CatalogBean {
 			dist = Math.acos(dist);
 			dist = Math.toDegrees(dist);
 			dist = dist * 60 * 1.1515* 1.609344;
-			
-		setDistance(dist);
+
+			setDistance(dist);
 			return (dist);
 		}
 	}

@@ -19,7 +19,12 @@
 	<ui:define name="content">
 
 		<div style="margin-left: 14vw;">
+			
 			<h:panelGroup id="affichagePromotion" class="w3-row" layout="block">
+				
+				<!-- Desactivation des promotions préférées -->
+				
+				<!--  				
 				<h:panelGroup layout="block"
 					rendered='#{not empty connectionBean.loggedUser}'>
 					<h:panelGroup class="w3-row">
@@ -47,8 +52,16 @@
 					</h:panelGroup>
 
 				</h:panelGroup>
-				<h:panelGroup style="margin-left: 14vw;">
+				-->
+				
+				
+				<h:panelGroup style="margin-left: 14vw;" rendered ="#{not empty connectionBean.loggedUser and connectionBean.loggedUser['class'].simpleName eq 'Client'}">
 					<ui:repeat var="promotion" value="#{catalogBean.promotions}">
+						<ui:include src="../../WEB-INF/components/promotion3.xhtml" />
+					</ui:repeat>
+				</h:panelGroup>
+				<h:panelGroup style="margin-left: 14vw;" rendered ="#{not empty connectionBean.loggedUser and connectionBean.loggedUser['class'].simpleName eq 'Shopkeeper'}">
+					<ui:repeat var="promotion" value="#{addPromotionBean.listPromo}">
 						<ui:include src="../../WEB-INF/components/promotion3.xhtml" />
 					</ui:repeat>
 				</h:panelGroup>

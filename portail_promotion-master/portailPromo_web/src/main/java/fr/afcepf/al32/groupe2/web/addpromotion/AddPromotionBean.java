@@ -106,6 +106,8 @@ public class AddPromotionBean {
 	
 	private List<BaseProduct> products;
 	
+	private List<Promotion> listPromo;
+	
 	public void create() {
 		Promotion promotion = new Promotion();
 		promotion.setName(promotionName);
@@ -339,5 +341,25 @@ public class AddPromotionBean {
 
 	public void setTopPromoTemplates(List<PromotionTemplateResultDto> topPromoTemplates) {
 		this.topPromoTemplates = topPromoTemplates;
+	}
+	
+	
+	public List<Promotion> getListPromo() {
+		return listPromo;
+	}
+
+	public void setListPromo(List<Promotion> listPromo) {
+		this.listPromo = listPromo;
+	}
+
+	public void getPromotionCommercant(){
+		Shopkeeper shopkeeper = (Shopkeeper) connectionBean.getLoggedUser();
+		List<Promotion> promos= new ArrayList<Promotion>();
+		//Map<Long,Promotion> promotions= new HashMap<Long, Promotion>();
+		for (Shop shop : shopkeeper.getShops().values()) {
+			promos.addAll(shop.getPromotions().values());
+		}
+		
+		setListPromo((List<Promotion>) promos);
 	}
 }

@@ -1,7 +1,10 @@
 package fr.afcepf.al32.groupe2.web.connexion;
 
+import javax.faces.context.FacesContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.annotation.SessionScope;
 
@@ -30,9 +33,15 @@ public class ConnectionBean {
 		String urlAuth = "http://localhost:8088/portail_promotion_ws_authentification/rest/auth/login" +
 				"?login=" + login + "&password=" + password;
 		RestTemplate restTemplate = new RestTemplate();
-		Long userId = restTemplate.getForObject(urlAuth, Long.class);
-
+		Long userId;
+		try {
+			userId = restTemplate.getForObject(urlAuth, Long.class);
+		} catch (RestClientException e) {
+			e.printStackTrace();
+			userId = 0L;
+		}
 		User newUser = authenticationService.findOneById(userId);
+
 		//AQ1905
 
 		if(newUser != null) {
@@ -49,7 +58,11 @@ public class ConnectionBean {
 	public String logout() {
 		loggedUser = null;
 
-		return "/invite/fichesPromotion/pageAffichagePromotions";
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().invalidateSession();
+
+
+		return "../../index.xhtml";
 	}
 
 	public String getLogin() {
@@ -75,5 +88,7 @@ public class ConnectionBean {
 	public String getMessage() {
 		return message;
 	}
+
+
 
 }

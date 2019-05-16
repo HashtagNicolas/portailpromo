@@ -203,5 +203,65 @@ public class RechercheCommerceServiceImpl implements IRechercheCommerceService {
 		}
 		return new ResponseWsDto(listeshop, null, perimetre, null);
 	}
+	
+	
+	@Override
+	public List<Double> getCoordonnees(String source) {
+	
+		String url = null;
+		List<Double>coordonnees = new ArrayList<Double>();
+		try {
+			String sourceModifiee = source.replaceAll(StringUtils.SPACE, SPACE);
+
+			if (source != null && !source.isEmpty()) {
+				url = "https://maps.googleapis.com/maps/api/geocode/json?address="
+						+ URLEncoder.encode(sourceModifiee, "UTF-8") + "&key=" + URLEncoder.encode(API_KEY, "UTF-8");
+			}
+
+			URL urlObj = new URL(url);
+			HttpURLConnection con = (HttpURLConnection) urlObj.openConnection();
+			con.setRequestMethod("GET");
+			con.setRequestProperty("User-Agent", "Mozilla/5.0");
+
+			int responseCode = con.getResponseCode();	
+
+			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			
+			JSONObject myResponse = new JSONObject(response.toString());
+			// String status = myResponse.get("status")
+			JSONArray listeResultats = ((JSONArray) myResponse.get("results"));
+			double laditude;
+			double longitude;
+			if (listeResultats.isEmpty()) {
+				laditude = 0;
+				longitude= 0;
+				coordonnees.add(laditude);
+				coordonnees.add(longitude);
+
+			} else {
+				laditude = ((JSONArray) myResponse.get("results")).getJSONObject(0).getJSONObject("geometry")
+						.getJSONObject("location").getDouble("lat");
+				longitude = ((JSONArray) myResponse.get("results")).getJSONObject(0).getJSONObject("geometry")
+						.getJSONObject("location").getDouble("lng");
+
+				coordonnees.add(laditude);
+				coordonnees.add(longitude);
+				
+			}
+			
+			System.out.println(coordonnees);
+			in.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			return coordonnees;
+		
+	}
+		
 
 }
