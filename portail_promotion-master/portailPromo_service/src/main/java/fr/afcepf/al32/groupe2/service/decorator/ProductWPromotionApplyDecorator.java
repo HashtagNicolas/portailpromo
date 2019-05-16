@@ -1,14 +1,17 @@
-package fr.afcepf.al32.groupe2.service.factory;
+package fr.afcepf.al32.groupe2.service.decorator;
 
 import java.time.Duration;
 
 import fr.afcepf.al32.groupe2.entity.Promotion;
+import fr.afcepf.al32.groupe2.service.factory.DiscountFactory;
+import fr.afcepf.al32.groupe2.service.factory.PackFactory;
+import fr.afcepf.al32.groupe2.service.factory.PercentTypeFactory;
 
 
 
-public class PromotionFactory implements IPromotionFactory {
+public class ProductWPromotionApplyDecorator implements IProductWPromotionApplyDecorator {
 	
-	private static PromotionFactory promotionFactory;
+	private static ProductWPromotionApplyDecorator promotionFactory;
 		
 	private String name;
 	private String description;
@@ -26,9 +29,9 @@ public class PromotionFactory implements IPromotionFactory {
 	private Double percentValue;
 	private Double minPurchaseAmountPercent;
 	
-	public static PromotionFactory getPromotionType() {
+	public static ProductWPromotionApplyDecorator getPromotionType() {
 		if(promotionFactory == null) {
-			promotionFactory = new PromotionFactory();
+			promotionFactory = new ProductWPromotionApplyDecorator();
 		}
 		
 		return promotionFactory;
@@ -65,61 +68,62 @@ public class PromotionFactory implements IPromotionFactory {
 		return promotion;	
 	}
 
-	public PromotionFactory createTypePack() {
+	public ProductWPromotionApplyDecorator createTypePack() {
 		this.promotionType = "Pack";
 		return this;
 	}
 	
-	public PromotionFactory createTypeDiscount() {
+	public ProductWPromotionApplyDecorator createTypeDiscount() {
 		this.promotionType = "Discount";
 		return this;
 	}
 	
-	public PromotionFactory createTypePercentType() {
+	public ProductWPromotionApplyDecorator createTypePercentType() {
 		this.promotionType = "PercentType";
 		return this;
 	}
 	
 	@Override
-	public IPromotionFactory setNamePromotion(String name) {
+	public IProductWPromotionApplyDecorator setNamePromotion(String name) {
 		this.name = name;
 		return this;
 	}
 
 	@Override
-	public IPromotionFactory setDescriptionPromotion(String description) {
+	public IProductWPromotionApplyDecorator setDescriptionPromotion(String description) {
 		this.description = description;
 		return this;
 	}
 
 	@Override
-	public IPromotionFactory setLimitTimePromotion(Duration limitTimePromotion) {
+	public IProductWPromotionApplyDecorator setLimitTimePromotion(Duration limitTimePromotion) {
 		this.limitTimePromotion = limitTimePromotion;
 		return this;
 	}
 
 	@Override
-	public IPromotionFactory setLimitTimeTakePromotion(Duration limitTimeTakePromotion) {
+	public IProductWPromotionApplyDecorator setLimitTimeTakePromotion(Duration limitTimeTakePromotion) {
 		this.limitTimeTakePromotion = limitTimeTakePromotion;
 		return this;
 	}
 
 	@Override
-	public IPromotionFactory setQuantityInitAvailable(Double quantityInitAvailable) {
+	public IProductWPromotionApplyDecorator setQuantityInitAvailable(Double quantityInitAvailable) {
 		this.quantityInitAvailable = quantityInitAvailable;
 		return this;
 	}
 
 	@Override
-	public IPromotionFactory setIsCumulative(Boolean isCumulative) {
+	public IProductWPromotionApplyDecorator setIsCumulative(Boolean isCumulative) {
 		this.isCumulative = isCumulative;
 		return this;
 	}
 
 	@Override
-	public IPromotionFactory getTypePromotion(String promotionType) {
-		this.promotionType = promotionType;
-		return this;
+	public Long createProduct(Long id) {
+		return id;
+		
+		
 	}
 
 }
